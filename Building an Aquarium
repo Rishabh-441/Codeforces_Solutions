@@ -1,0 +1,63 @@
+// package codeforces.Practice;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class BuildingAquarium {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            int w = sc.nextInt();
+            int[] arr = new int[n];
+            int max = -1;
+            for (int i = 0; i < n; i++) {
+                arr[i] = sc.nextInt();
+                max = Math.max(max, arr[i]);
+            }
+            int[] leftMax = new int[n];
+            int[] rightMax = new int[n];
+            int left = -1;
+            int right = -1;
+            for (int i = 0; i < n; i++) {
+                leftMax[i] = left;
+                if (arr[i] >= left) leftMax[i] = -1;
+                left = Math.max(left, arr[i]);
+            }
+            for (int i = n-1; i >= 0; i--) {
+                rightMax[i] = right;
+                if (arr[i] >= right) rightMax[i] = -1;
+                right = Math.max(right, arr[i]);
+            }
+            System.out.println(helper(arr, leftMax, rightMax, w, n, max));
+        }
+    }
+
+    private static long helper(int[] arr, int[] leftMax, int[] rightMax, int w, int n, int max) {
+        long st = 0;
+        long end = w + max + 1;
+        long ans = 0;
+
+        while (st <= end) {
+//            System.out.println("in loop");
+            long mid = st + (end-st)/2;
+            long remWater = checkWaterLevel(arr, leftMax, rightMax, n, w, mid);
+            if (remWater >= 0) {
+                ans = mid;
+                st = mid + 1;
+            }
+            else {
+                end = mid - 1;
+            }
+        }
+        return ans;
+    }
+
+    private static long checkWaterLevel(int[] arr, int[] leftMax, int[] rightMax, int n, long total, long maxWater) {
+        for (int i = 0; i < n; i++) {
+            if (arr[i] <= maxWater) total -= maxWater - arr[i];
+        }
+        return total;
+    }
+}
