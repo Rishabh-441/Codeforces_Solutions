@@ -1,0 +1,47 @@
+// package codeforces.Practice;
+
+import java.util.Scanner;
+
+public class TenzingAndBooks {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            long x = sc.nextLong();
+            long[] arr1 = new long[n];
+            long[] arr2 = new long[n];
+            long[] arr3 = new long[n];
+            for (int i = 0; i < n; i++) {
+                arr1[i] = sc.nextLong();
+            }
+            for (int i = 0; i < n; i++) {
+                arr2[i] = sc.nextLong();
+            }
+            for (int i = 0; i < n; i++) {
+                arr3[i] = sc.nextLong();
+            }
+            long or = 0;
+            int ind = 0;
+            while (ind < n) {
+                if ((x | arr1[ind]) == x) or = or | arr1[ind];
+                else break;
+                ind++;
+            }
+            ind = 0;
+            while (ind < n) {
+                if ((x | arr2[ind]) == x) or = or | arr2[ind];
+                else break;
+                ind++;
+            }
+            ind = 0;
+            while (ind < n) {
+                if ((x | arr3[ind]) == x) or = or | arr3[ind];
+                else break;
+                ind++;
+            }
+            if (or == x) System.out.println("Yes");
+            else System.out.println("No");
+        }
+    }
+}
